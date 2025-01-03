@@ -1,16 +1,20 @@
 {
-  "private": true,
-  "name": "template-for-proposals",
-  "description": "A repository template for ECMAScript proposals.",
+  "name": "proposal-string-replace-from-last",
+  "description": "Proposal for .replaceLast() method on string.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Kazi Tajnur Islam",
+    "email": "tajnur007@gmail.com"
+  },
   "scripts": {
     "start": "npm run build-loose -- --watch",
     "build": "npm run build-loose -- --strict",
     "build-loose": "node -e 'fs.mkdirSync(\"build\", { recursive: true })' && ecmarkup --load-biblio @tc39/ecma262-biblio --verbose spec.emu build/index.html --lint-spec"
   },
-  "homepage": "https://github.com/tc39/template-for-proposals#readme",
+  "homepage": "https://github.com/tajnur007/proposal-string-replace-from-last#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tc39/template-for-proposals.git"
+    "url": "git+https://github.com/tajnur007/proposal-string-replace-from-last.git"
   },
   "license": "MIT",
   "devDependencies": {

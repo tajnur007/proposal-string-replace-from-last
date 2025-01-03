@@ -1,50 +1,64 @@
-# template-for-proposals
+# String.prototype.replaceLast
 
-A repository template for ECMAScript proposals.
+ECMAScript proposal for `String.prototype.replaceLast`, i.e. `.replaceLast()` method on string.
 
-## Before creating a proposal
+## Motivation
 
-Please ensure the following:
-  1. You have read the [process document](https://tc39.github.io/process-document/)
-  1. You have reviewed the [existing proposals](https://github.com/tc39/proposals/)
-  1. You are aware that your proposal requires being a member of TC39, or locating a TC39 delegate to “champion” your proposal
+Replacing a sub-string in a string is a very common programming pattern. 
 
-## Create your proposal repo
+The proposal has a major concerns: **Semantical**. Which means `clearly representing the operation i want`.
 
-Follow these steps:
-  1. Click the green [“use this template”](https://github.com/tc39/template-for-proposals/generate) button in the repo header. (Note: Do not fork this repo in GitHub's web interface, as that will later prevent transfer into the TC39 organization)
-  1. Update ecmarkup and the biblio to the latest version: `npm install --save-dev ecmarkup@latest && npm install --save-dev --save-exact @tc39/ecma262-biblio@latest`.
-  1. Go to your repo settings page:
-      1. Under “General”, under “Features”, ensure “Issues” is checked, and disable “Wiki”, and “Projects” (unless you intend to use Projects)
-      1. Under “Pull Requests”, check “Always suggest updating pull request branches” and “automatically delete head branches”
-      1. Under the “Pages” section on the left sidebar, and set the source to “deploy from a branch”, select “gh-pages” in the branch dropdown, and then ensure that “Enforce HTTPS” is checked.
-      1. Under the “Actions” section on the left sidebar, under “General”, select “Read and write permissions” under “Workflow permissions” and click “Save”
-  1. [“How to write a good explainer”][explainer] explains how to make a good first impression.
+And with the changes. There's a sugar here: Performance. Avoid obvious overhead. And may improve the constant factors in the time complexity.
+Even there's not an order of magnitude change. But it's may useful in some performance-sensitive scenarios.
 
-      > Each TC39 proposal should have a `README.md` file which explains the purpose
-      > of the proposal and its shape at a high level.
-      >
-      > ...
-      >
-      > The rest of this page can be used as a template ...
+---
 
-      Your explainer can point readers to the `index.html` generated from `spec.emu`
-      via markdown like
+ECMAScript currently supports `String.prototype.replace` to replace the first instance of a sub-string/pattern from a string. However, there is no way to replace the **last instance** of a substring in a string.
 
-      ```markdown
-      You can browse the [ecmarkup output](https://ACCOUNT.github.io/PROJECT/)
-      or browse the [source](https://github.com/ACCOUNT/PROJECT/blob/HEAD/spec.emu).
-      ```
+Currently one of the most common way of achieving this is to **use a regex**:
 
-      where *ACCOUNT* and *PROJECT* are the first two path elements in your project's Github URL.
-      For example, for github.com/**tc39**/**template-for-proposals**, *ACCOUNT* is “tc39”
-      and *PROJECT* is “template-for-proposals”.
+```js
+function replaceLastSubstring(string, substring, replacement) {
+  const regex = new RegExp(`(${substring})(?!.*${substring})`); 
+  return string.replace(regex, replacement);
+}
+```
 
+This approach has the downsides, the regular expression itself can be slightly more complex to understand and debug. Performance might be slightly slower due to the regex engine's overhead. If the `substring` contains special characters that have meaning within regular expressions (e.g., ., *, +, ?, $, ^, etc.), the regex needs to be properly escaped to avoid unexpected behavior.
 
-## Maintain your proposal repo
+An alternate solution is to combine `.lastIndexOf()` with `.substring()`:
 
-  1. Make your changes to `spec.emu` (ecmarkup uses HTML syntax, but is not HTML, so I strongly suggest not naming it “.html”)
-  1. Any commit that makes meaningful changes to the spec, should run `npm run build` to verify that the build will succeed and the output looks as expected.
-  1. Whenever you update `ecmarkup`, run `npm run build` to verify that the build will succeed and the output looks as expected.
+```js
+function replaceLastSubstring(string, substring, replacement) {
+  const lastIndex = string.lastIndexOf(substring);
 
-  [explainer]: https://github.com/tc39/how-we-work/blob/HEAD/explainer.md
+  if (lastIndex !== -1) {
+    const firstPart = string.substring(0, lastIndex);
+    const lastPart = string.substring(lastIndex + substring.length);
+    return firstPart + replacement + lastPart;
+  }
+
+  return string; 
+}
+```
+
+The code involves string manipulation (concatenation and substring extraction), which can be less concise than using a single `replaceLast()` method.
+
+Example usage:
+
+```js
+const testString = 'aabca';
+const replacedString = replaceLastSubstring(testString, 'a', '_');
+console.log(replacedString);
+
+// Output: aabc_
+```
+
+## Proposed solution
+
+I propose the addition of a new method to the String prototype - `replaceLast`. This would give developers a straight-forward way to accomplish this common, basic operation.
+
+```js
+const testString = 'aabca';
+const replacedString = testString.replaceLast('a', '_');
+```
