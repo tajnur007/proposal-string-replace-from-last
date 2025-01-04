@@ -14,8 +14,7 @@ Replacing a sub-string in a string is a very common programming pattern.
 
 The proposal has a major concerns: **Semantical**. Which means `clearly representing the operation i want`.
 
-And with the changes. There's a sugar here: Performance. Avoid obvious overhead. And may improve the constant factors in the time complexity.
-Even there's not an order of magnitude change. But it's may useful in some performance-sensitive scenarios.
+And with the changes. It's may useful in some performance-sensitive scenarios.
 
 ---
 
@@ -30,7 +29,7 @@ function replaceLastSubstring(string, substring, replacement) {
 }
 ```
 
-This approach has the downsides, the regular expression itself can be slightly more complex to understand and debug. Performance might be slightly slower due to the regex engine's overhead. If the `substring` contains special characters that have meaning within regular expressions (e.g., ., *, +, ?, $, ^, etc.), the regex needs to be properly escaped to avoid unexpected behavior.
+This approach has the downsides, the regular expression itself can be slightly more complex to understand and debug. Performance might be slightly slower due to the regex engine's overhead. If the `substring` contains special characters that have meaning within regular expressions (e.g., ., *, +, ?, $, ^, etc.), the regex needs to be properly escaped to avoid unexpected behaviour.
 
 An alternate solution is to combine `.lastIndexOf()` with `.substring()`:
 

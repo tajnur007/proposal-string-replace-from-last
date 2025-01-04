@@ -1,17 +1,14 @@
 <!doctype html>
-<head><meta charset="utf-8"><meta property="og:image" content="https://tc39.es/ecmarkup/ecma-logo.png"><meta property="og:title" content="Proposal Title Goes Here"><meta property="og:description" content="This is an emu-clause
-  This is an algorithm:
+<head><meta charset="utf-8"><meta property="og:image" content="https://tc39.es/ecmarkup/ecma-logo.png"><meta property="og:title" content="String.prototype.replaceLast"><meta property="og:description" content="Motivation
   
-    1. Let _proposal_ be *undefined*.
-    1. If IsAccepted(_proposal_) is *true*, then
-      1. Let _stage_ be *0*ℤ.
-    1. Else,
-      1. Let _stage_ be *-1*ℤ.
-    1. Return ? ToString(_stage_).">
+    Replacing a sub-string in a string is a very common programming pattern. The proposal has a major concerns: *Semantical*. Which means *clearly representing the operation i want*. And with the changes. It's may useful in some performance-sensitive scenarios.
+  
+  
+    ECMAScript">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/base16/solarized-light.min.css"><link rel="stylesheet" href="./spec.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 <script src="./spec.js"></script>
-<title>Proposal Title Goes Here</title><script>'use strict';
+<title>String.prototype.replaceLast</title><script>'use strict';
 let sdoBox = {
   init() {
     this.$alternativeId = null;
@@ -1618,7 +1615,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let sdoMap = JSON.parse(`{}`);
-let biblio = JSON.parse(`{"refsByClause":{"sec-demo-clause":["_ref_0"]},"entries":[{"type":"clause","id":"sec-demo-clause","titleHTML":"This is an emu-clause","number":"1"},{"type":"op","aoid":"IsAccepted","refId":"sec-is-accepted"},{"type":"clause","id":"sec-is-accepted","title":"IsAccepted ( proposal )","titleHTML":"IsAccepted ( <var>proposal</var> )","number":"2","referencingIds":["_ref_0"]},{"type":"clause","id":"sec-copyright-and-software-license","title":"Copyright & Software License","titleHTML":"Copyright &amp; Software License","number":"A"}]}`);
+let biblio = JSON.parse(`{"refsByClause":{},"entries":[{"type":"clause","id":"motivation","titleHTML":"Motivation","number":"1"},{"type":"clause","id":"proposed-solution","titleHTML":"Proposed solution","number":"2"},{"type":"clause","id":"high-level-api","titleHTML":"High-level API","number":"3"},{"type":"clause","id":"faq","titleHTML":"FAQ","number":"4"},{"type":"clause","id":"sec-copyright-and-software-license","title":"Copyright & Software License","titleHTML":"Copyright &amp; Software License","number":"A"}]}`);
 ;let usesMultipage = false</script><style>/* IBM Plex fonts (Latin subset) have been downloaded from Google Fonts and modified to add support back in for the `zero` substitution (slashed zeroes) */
 
 /* https://fonts.googleapis.com/css2?family=IBM%20Plex%20Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap */
@@ -3295,23 +3292,97 @@ emu-intro {
 </ul></div><div id="menu-toggle"><svg xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%; stroke:currentColor" viewBox="0 0 120 120" width="54" height="54">
       <title>Menu</title>
       <path stroke-width="10" stroke-linecap="round" d="M30,60 h60  M30,30 m0,5 h60  M30,90 m0,-5 h60"></path>
-    </svg></div><div id="menu-spacer" class="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins<button class="unpin-all">clear</button></div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#sec-demo-clause" title="This is an emu-clause"><span class="secnum">1</span> This is an emu-clause</a></li><li><span class="item-toggle-none"></span><a href="#sec-is-accepted" title="IsAccepted ( proposal )"><span class="secnum">2</span> IsAccepted ( <var>proposal</var> )</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version">Stage -1 Draft / January 4, 2025</h1><h1 class="title">Proposal Title Goes Here</h1>
+    </svg></div><div id="menu-spacer" class="menu-spacer"></div><div id="menu"><div id="menu-search"><input type="text" id="menu-search-box" placeholder="Search..."><div id="menu-search-results" class="inactive"></div></div><div id="menu-pins"><div class="menu-pane-header">Pins<button class="unpin-all">clear</button></div><ul id="menu-pins-list"></ul></div><div class="menu-pane-header">Table of Contents</div><div id="menu-toc"><ol class="toc"><li><span class="item-toggle-none"></span><a href="#motivation" title="Motivation"><span class="secnum">1</span> Motivation</a></li><li><span class="item-toggle-none"></span><a href="#proposed-solution" title="Proposed solution"><span class="secnum">2</span> Proposed solution</a></li><li><span class="item-toggle-none"></span><a href="#high-level-api" title="High-level API"><span class="secnum">3</span> High-level API</a></li><li><span class="item-toggle-none"></span><a href="#faq" title="FAQ"><span class="secnum">4</span> FAQ</a></li><li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li></ol></div></div><div id="spec-container"><h1 class="version">Stage undefined Draft / January 4, 2025</h1><h1 class="title">String.prototype.replaceLast</h1>
 
-<emu-clause id="sec-demo-clause">
-  <h1><span class="secnum">1</span> This is an emu-clause</h1>
-  <p>This is an algorithm:</p>
-  <emu-alg><ol><li>Let <var>proposal</var> be <emu-val>undefined</emu-val>.</li><li>If <emu-xref aoid="IsAccepted" id="_ref_0"><a href="#sec-is-accepted">IsAccepted</a></emu-xref>(<var>proposal</var>) is <emu-val>true</emu-val>, then<ol><li>Let <var>stage</var> be <emu-val>0</emu-val><sub>ℤ</sub>.</li></ol></li><li>Else,<ol><li>Let <var>stage</var> be <emu-val>-1</emu-val><sub>ℤ</sub>.</li></ol></li><li>Return ?&nbsp;<emu-xref aoid="ToString"><a href="https://tc39.es/ecma262/#sec-tostring">ToString</a></emu-xref>(<var>stage</var>).</li></ol></emu-alg>
+<p>
+  ECMAScript proposal for <var>String.prototype.replaceLast</var>, i.e. <var>.replaceLast()</var> method on string.
+</p>
+<p>
+  Author: <a target="_blank" href="http://linkedin.com/in/tajnur" data-print-href="">Kazi Tajnur Islam</a>
+</p>
+
+<emu-clause id="motivation">
+  <h1><span class="secnum">1</span> Motivation</h1>
+  <p>
+    Replacing a sub-string in a string is a very common programming pattern. The proposal has a major concerns: <emu-val>Semantical</emu-val>. Which means <emu-val>clearly representing the operation i want</emu-val>. And with the changes. It's may useful in some performance-sensitive scenarios.
+  </p>
+  <p>
+    ECMAScript currently supports <var>String.prototype.replace</var> to replace the first instance of a sub-string/pattern from a string. However, there is no way to replace the <emu-val>last instance</emu-val> of a <emu-xref href="#substring"><a href="https://tc39.es/ecma262/#substring">substring</a></emu-xref> in a string.
+  </p>
+  <p>
+    Currently one of the most common way of achieving this is to <emu-val>use a regex</emu-val>:
+  </p>
+  <pre>    function replaceLastSubstring(string, substring, replacement) {
+      const regex = new RegExp(`(${substring})(?!.*${substring})`);
+      return string.replace(regex, replacement);
+    }
+  </pre>
+  <p>
+    This approach has the downsides, the regular expression itself can be slightly more complex to understand and debug. Performance might be slightly slower due to the regex engine's overhead. If the <var>substring</var> contains special characters that have meaning within regular expressions (e.g., ., *, +, ?, $, ^, etc.), the regex needs to be properly escaped to avoid unexpected behaviour.
+  </p>
+  <p>
+    An alternate solution is to combine <var>.lastIndexOf()</var> with <var>.substring()</var>:
+  </p>
+  <pre>    function replaceLastSubstring(string, substring, replacement) {
+      const lastIndex = string.lastIndexOf(substring);
+
+      if (lastIndex !== -1) {
+        const firstPart = string.substring(0, lastIndex);
+        const lastPart = string.substring(lastIndex + substring.length);
+        return firstPart + replacement + lastPart;
+      }
+
+      return string;
+    }
+  </pre>
+  <p>
+    The code involves string manipulation (concatenation and <emu-xref href="#substring"><a href="https://tc39.es/ecma262/#substring">substring</a></emu-xref> extraction), which can be less concise than using a single <var>replaceLast()</var> method.
+  </p>
+  <p>Example usage:</p>
+  <pre>    const testString = 'aabca';
+    const replacedString = replaceLastSubstring(testString, 'a', '_');
+    console.log(replacedString);
+
+    // Output: aabc_
+  </pre>
+  <p></p>
 </emu-clause>
 
-<emu-clause id="sec-is-accepted" type="abstract operation" aoid="IsAccepted">
-  <h1><span class="secnum">2</span> IsAccepted ( <var>proposal</var> )</h1>
-  <p>The abstract operation IsAccepted takes argument <var>proposal</var> (an <emu-xref href="#sec-ecmascript-language-types"><a href="https://tc39.es/ecma262/#sec-ecmascript-language-types">ECMAScript language value</a></emu-xref>) and returns a Boolean. Tells you if the proposal was accepted It performs the following steps when called:</p>
-  <emu-alg><ol><li>If <var>proposal</var> <emu-xref href="#sec-ecmascript-language-types-string-type"><a href="https://tc39.es/ecma262/#sec-ecmascript-language-types-string-type">is not a String</a></emu-xref>, or is not accepted, return <emu-val>false</emu-val>.</li><li>Return <emu-val>true</emu-val>.</li></ol></emu-alg>
+<emu-clause id="proposed-solution">
+  <h1><span class="secnum">2</span> Proposed solution</h1>
+  <p>
+    I propose the addition of a new method to the String prototype - <emu-val>replaceLast</emu-val>. This would give developers a straight-forward way to accomplish this common, basic operation.
+  </p>
+  <pre>    const testString = 'aabca';
+    const replacedString = testString.replaceLast('a', '_');
+  </pre>
+  <p>
+    This would behave the same as <a target="_blank" href="https://262.ecma-international.org/11.0/index.html#sec-string.prototype.replace" data-print-href="">String.prototype.replace</a> but would iterate from the last to the first.
+  </p>
+</emu-clause>
+
+<emu-clause id="high-level-api">
+  <h1><span class="secnum">3</span> High-level API</h1>
+  <p>The proposed signature is the same as the existing <var>String.prototype.replace</var> method:</p>
+  <pre>    String.prototype.replaceLast(searchValue, replaceValue)
+  </pre>
+</emu-clause>
+
+<emu-clause id="faq">
+  <h1><span class="secnum">4</span> FAQ</h1>
+  <h3>What are the main benefits?</h3>
+  <p>
+    A simplified API for this common use-case that does not require RegExp knowledge. Possibly improved optimization potential on the VM side.
+  </p>
+  <h3>What about adding a direction parameter to the <var>replace</var> instead?</h3>
+  <p>
+    I thought about this way first, i.e. <emu-val>String.prototype.replace(searchValue, replaceValue, fromLast)</emu-val> - the default value of the <var>isLast</var> will be <var>false</var>. This can be an awkward interface because ECMAScript already have similar interface like <var>replaceLast</var>, e.g. <var>Array.prototype.findLast</var>, which clearly defines it's operation by the name.
+  </p>
 </emu-clause><emu-annex id="sec-copyright-and-software-license">
       <h1><span class="secnum">A</span> Copyright &amp; Software License</h1>
       
       <h2>Copyright Notice</h2>
-      <p>© 2025 Your Name(s) Here</p>
+      <p>© 2025 Kazi Tajnur Islam</p>
 
       <h2>Software License</h2>
       <p>All Software contained in this document ("Software") is protected by copyright and is being made available under the "BSD License", included below. This Software may be subject to third party rights (rights from parties other than Ecma International), including patent rights, and no licenses under such third party rights are granted under this license even if the third party concerned is a member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT <a href="https://ecma-international.org/memento/codeofconduct.htm">https://ecma-international.org/memento/codeofconduct.htm</a> FOR INFORMATION REGARDING THE LICENSING OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS.</p>
