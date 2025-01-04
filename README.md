@@ -62,3 +62,13 @@ I propose the addition of a new method to the String prototype - `replaceLast`. 
 const testString = 'aabca';
 const replacedString = testString.replaceLast('a', '_');
 ```
+
+This would behave the same as [String.prototype.replace](https://262.ecma-international.org/11.0/index.html#sec-string.prototype.replace) but would iterate from the last to the first.
+
+## High-level API
+
+The proposed signature is the same as the existing `String.prototype.replace` method:
+
+```js
+String.prototype.replaceLast(searchValue, replaceValue)
+```
