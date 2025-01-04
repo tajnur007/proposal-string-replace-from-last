@@ -72,3 +72,13 @@ The proposed signature is the same as the existing `String.prototype.replace` me
 ```js
 String.prototype.replaceLast(searchValue, replaceValue)
 ```
+
+## FAQ
+
+### What are the main benefits?
+
+A simplified API for this common use-case that does not require RegExp knowledge. Possibly improved optimization potential on the VM side.
+
+### What about adding a direction parameter to the `replace` instead?
+
+I thought about this way first, i.e. `String.prototype.replace(searchValue, replaceValue, fromLast)` - the default value of the `isLast` will be `false`. This can be an awkward interface because ECMAScript already have similar interface like `replaceLast`, e.g. `Array.prototype.findLast`, which clearly defines it's operation by the name.
