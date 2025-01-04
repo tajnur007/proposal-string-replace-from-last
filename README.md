@@ -2,6 +2,12 @@
 
 ECMAScript proposal for `String.prototype.replaceLast`, i.e. `.replaceLast()` method on string.
 
+## Status
+
+Author: [Kazi Tajnur Islam](http://linkedin.com/in/tajnur)
+
+Stage: `undefined` 
+
 ## Motivation
 
 Replacing a sub-string in a string is a very common programming pattern. 
