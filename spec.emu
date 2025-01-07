@@ -98,6 +98,6 @@ contributors: Kazi Tajnur Islam
   </p>
   <h3>What about adding a direction parameter to the _replace_ instead?</h3>
   <p>
-    I thought about this way first, i.e. *String.prototype.replace(searchValue, replaceValue, fromLast)* - the default value of the _isLast_ will be _false_. This can be an awkward interface because ECMAScript already have similar interface like _replaceLast_, e.g. _Array.prototype.findLast_, which clearly defines it's operation by the name.
+    I thought about this way first, i.e. *String.prototype.replace(searchValue, replaceValue, fromLast)* - the default value of the _fromLast_ will be _false_. This can be an awkward interface because ECMAScript already have similar interface like _replaceLast_, e.g. _Array.prototype.findLast_, which clearly defines it's operation by the name.
   </p>
 </emu-clause>
